@@ -26,7 +26,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, invoiceNumber 
 ✅ Professional templates
 ✅ Created by Kartik Singh
 
-https://bharatbillgen.vercel.app
+https://bharat-bill-generator.vercel.app/
 
 #GST #Invoice #IndianBusiness #Free #BharatBillGen`
 
