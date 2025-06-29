@@ -38,13 +38,13 @@ https://bharat-bill-generator.vercel.app/
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText('https://bharatbillgen.vercel.app')
+      await navigator.clipboard.writeText('https://bharat-bill-generator.vercel.app/')
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (error) {
       // Fallback for older browsers
       const textArea = document.createElement('textarea')
-      textArea.value = 'https://bharatbillgen.vercel.app'
+      textArea.value = 'https://bharat-bill-generator.vercel.app/'
       document.body.appendChild(textArea)
       textArea.select()
       document.execCommand('copy')
@@ -58,10 +58,10 @@ https://bharat-bill-generator.vercel.app/
     const linkedInMessage = encodeURIComponent(
       `Just discovered this amazing free GST invoice generator for Indian businesses! 🇮🇳\n\n` +
       `Created by Kartik Singh, it's completely free, works offline, and requires no registration.\n\n` +
-      `Perfect for MSMEs and freelancers! Check it out: https://bharatbillgen.vercel.app\n\n` +
+      `Perfect for MSMEs and freelancers! Check it out: https://bharat-bill-generator.vercel.app/\n\n` +
       `#GST #Invoice #IndianBusiness #MSME #Freelancer #BharatBillGen`
     )
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://bharatbillgen.vercel.app&summary=${linkedInMessage}`, '_blank')
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://bharat-bill-generator.vercel.app/&summary=${linkedInMessage}`, '_blank')
     onClose()
   }
 
@@ -212,21 +212,6 @@ https://bharat-bill-generator.vercel.app/
                 <span>Connect with the developer on LinkedIn</span>
               </li>
             </ul>
-          </div>
-
-          {/* Developer Credit */}
-          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              Made with ❤️ by{' '}
-              <a
-                href="https://www.linkedin.com/in/kartik-singh-879b6b288?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B57nku3kgQQKl%2BFqI%2BvmSdw%3D%3D"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-              >
-                Kartik Singh
-              </a>
-            </p>
           </div>
         </div>
 

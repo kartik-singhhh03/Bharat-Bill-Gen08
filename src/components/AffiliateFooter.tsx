@@ -35,7 +35,7 @@ const AffiliateFooter: React.FC<AffiliateFooterProps> = ({ isPremium }) => {
       "✅ Works offline\n" +
       "✅ No registration needed\n" +
       "✅ Professional templates\n\n" +
-      "https://bharatbillgen.vercel.app"
+      "https://bharat-bill-generator.vercel.app/"
     )
     window.open(`https://wa.me/?text=${message}`, '_blank')
   }
