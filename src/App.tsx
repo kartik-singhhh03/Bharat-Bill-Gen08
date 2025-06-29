@@ -23,6 +23,11 @@ import { generateGlobalInvoiceNumber, createGlobalInvoiceItem, updateGlobalInvoi
 import { detectUserLocation, getCountryConfig } from './utils/ipDetection'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { LanguageProvider } from './contexts/LanguageContext'
+import ReactGA from 'react-ga4'
+
+// Replace with your actual ID:
+ReactGA.initialize("G-9LVK9DJ1RX")
+ReactGA.send("pageview")
 
 function App() {
   const location = useLocation()
