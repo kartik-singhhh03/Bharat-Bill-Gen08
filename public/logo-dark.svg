@@ -1,0 +1,21 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="60" rx="8" fill="white"/>
+  
+  <!-- Icon -->
+  <rect x="12" y="15" width="20" height="30" rx="2" fill="url(#gradient)" opacity="0.9"/>
+  <path d="M16 22h12v2H16v-2zm0 4h12v2H16v-2zm0 4h8v2H16v-2zm0 4h6v2H16v-2z" fill="white"/>
+  <circle cx="26" cy="28" r="4" fill="white"/>
+  <path d="M24 27h4v2h-4v-2z" fill="#f97316"/>
+  
+  <!-- Text -->
+  <text x="45" y="25" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#1f2937">BharatBillGen</text>
+  <text x="45" y="40" font-family="Inter, sans-serif" font-size="10" font-weight="400" fill="#6b7280">GST Invoice Generator</text>
+  
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f97316"/>
+      <stop offset="1" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+</svg>
