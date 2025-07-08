@@ -23,7 +23,10 @@ export default defineConfig({
           },
           {
             src: 'pwa-512x512.png',
-            sizes: '512x512',
+              icons: ['lucide-react'],
+              ai: ['tesseract.js', 'framer-motion'],
+              charts: ['recharts'],
+              email: ['@emailjs/browser']
             type: 'image/png'
           }
         ]
@@ -47,6 +50,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom']
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'recharts']
   }
 })

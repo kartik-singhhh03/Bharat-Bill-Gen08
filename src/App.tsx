@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import Header from './components/Header'
-import InvoiceForm from './components/InvoiceForm'
-import PreviewInvoice from './components/PreviewInvoice'
+import EnhancedInvoiceForm from './components/EnhancedInvoiceForm'
+import EnhancedPreviewInvoice from './components/EnhancedPreviewInvoice'
+import ChartsDashboard from './components/ChartsDashboard'
 import GlobalInvoiceForm from './components/GlobalInvoiceForm'
 import PreviewGlobalInvoice from './components/PreviewGlobalInvoice'
 import RegionSwitcher from './components/RegionSwitcher'
@@ -18,9 +20,11 @@ import FeaturesPage from './components/FeaturesPage'
 import CustomTemplateBuilder from './components/CustomTemplateBuilder'
 import { Invoice, InvoiceItem } from './types/invoice'
 import { GlobalInvoice, GlobalInvoiceItem } from './types/globalInvoice'
-import { generateInvoiceNumber } from './utils/invoiceUtils'
+import { generateInvoiceNumber, exportToPDF } from './utils/invoiceUtils'
 import { generateGlobalInvoiceNumber, createGlobalInvoiceItem, updateGlobalInvoiceItem } from './utils/globalInvoiceUtils'
 import { detectUserLocation, getCountryConfig } from './utils/ipDetection'
+import { detectUserCountry } from './data/countries'
+import { exchangeRateService } from './utils/exchangeRates'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { LanguageProvider } from './contexts/LanguageContext'
 import ReactGA from 'react-ga4'
@@ -90,6 +94,10 @@ function App() {
   const [showGlobalPreview, setShowGlobalPreview] = useState(false)
   const [showUnlockModal, setShowUnlockModal] = useState(false)
   const [isPremium, setIsPremium] = useState(false)
+  const [selectedCountry, setSelectedCountry] = useState(null)
+  const [selectedCurrency, setSelectedCurrency] = useState('INR')
+  const [exchangeRate, setExchangeRate] = useState(1)
+  const [showDashboard, setShowDashboard] = useState(false)
 
   // Auto-detect user location on first load
   useEffect(() => {
@@ -119,6 +127,31 @@ function App() {
 
     detectLocation()
   }, [])
+
+  // Initialize country and currency
+  useEffect(() => {
+    const detectedCountry = detectUserCountry()
+    setSelectedCountry(detectedCountry)
+    setSelectedCurrency(detectedCountry.currency)
+  }, [])
+
+  // Update exchange rate when currency changes
+  useEffect(() => {
+    if (selectedCurrency !== 'INR') {
+      updateExchangeRate()
+    } else {
+      setExchangeRate(1)
+    }
+  }, [selectedCurrency])
+
+  const updateExchangeRate = async () => {
+    try {
+      const rate = await exchangeRateService.getConversionRate('INR', selectedCurrency)
+      setExchangeRate(rate)
+    } catch (error) {
+      console.error('Failed to update exchange rate:', error)
+    }
+  }
 
   // Scroll to top on route change
   useEffect(() => {
@@ -250,6 +283,30 @@ function App() {
     setCurrentRegion(region)
     setShowPreview(false)
     setShowGlobalPreview(false)
+    setShowDashboard(false)
+  }
+
+  const handlePreviewInvoice = async () => {
+    // Auto-generate invoice number if empty
+    if (!invoice.number) {
+      setInvoice(prev => ({ ...prev, number: generateInvoiceNumber() }))
+    }
+    
+    // Save invoice to history
+    const invoiceHistory = JSON.parse(localStorage.getItem('invoice_history') || '[]')
+    const invoiceWithId = { ...invoice, id: Date.now().toString() }
+    invoiceHistory.push(invoiceWithId)
+    localStorage.setItem('invoice_history', JSON.stringify(invoiceHistory))
+    
+    setShowPreview(true)
+  }
+
+  const handleDownloadPDF = async () => {
+    try {
+      await exportToPDF(invoice, isPremium)
+    } catch (error) {
+      console.error('Download failed:', error)
+    }
   }
 
   return (
@@ -261,20 +318,68 @@ function App() {
             onUnlockPremium={handleUnlockPremium}
           />
           
-          <main className="container mx-auto px-4 py-6">
+          <main className="container mx-auto px-4 py-6 relative">
             <Routes>
               <Route path="/" element={
-                <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="space-y-6"
+                >
                   {/* Hero Section */}
-                  <div className="text-center py-8">
-                    <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                      Create GST-Compliant Invoices for India — Now Supporting Global Invoices Too!
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center py-8 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-2xl border border-orange-200 dark:border-orange-800"
+                  >
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                      🚀 AI-Powered Invoice Generator
                     </h1>
-                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                      Professional invoice generator for Indian businesses with GST compliance, 
-                      plus international invoicing for global freelancers and businesses.
+                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-6">
+                      Create professional invoices with OCR scanning, voice input, AI descriptions, 
+                      multi-currency support, and real-time translation. Built for Indian businesses and global freelancers.
                     </p>
-                  </div>
+                    
+                    {/* Feature Pills */}
+                    <div className="flex flex-wrap justify-center gap-3 mb-6">
+                      {['📸 OCR Scan', '🎙️ Voice Input', '🤖 AI Descriptions', '🌍 Multi-Currency', '📊 Analytics'].map((feature, index) => (
+                        <motion.span
+                          key={feature}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.1 * index }}
+                          className="px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600"
+                        >
+                          {feature}
+                        </motion.span>
+                      ))}
+                    </div>
+
+                    {/* Quick Action Buttons */}
+                    <div className="flex flex-wrap justify-center gap-4">
+                      <button
+                        onClick={() => setShowDashboard(!showDashboard)}
+                        className="btn-secondary flex items-center space-x-2"
+                      >
+                        <span>📊</span>
+                        <span>{showDashboard ? 'Hide Dashboard' : 'View Analytics'}</span>
+                      </button>
+                    </div>
+                  </motion.div>
+
+                  {/* Dashboard */}
+                  <AnimatePresence>
+                    {showDashboard && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <ChartsDashboard />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   {/* Region Switcher */}
                   <RegionSwitcher
@@ -287,13 +392,13 @@ function App() {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div className="space-y-6">
                       {currentRegion === 'india' ? (
-                        <InvoiceForm
+                        <EnhancedInvoiceForm
                           invoice={invoice}
                           setInvoice={setInvoice}
                           addItem={addItem}
                           updateItem={updateItem}
                           removeItem={removeItem}
-                          onPreview={() => setShowPreview(true)}
+                          onPreview={handlePreviewInvoice}
                           isPremium={isPremium}
                           onUnlockPremium={handleUnlockPremium}
                         />
@@ -313,11 +418,13 @@ function App() {
                     
                     <div className="lg:sticky lg:top-6">
                       {currentRegion === 'india' ? (
-                        <PreviewInvoice
+                        <EnhancedPreviewInvoice
                           invoice={invoice}
                           visible={showPreview}
                           onClose={() => setShowPreview(false)}
                           isPremium={isPremium}
+                          selectedCurrency={selectedCurrency}
+                          exchangeRate={exchangeRate}
                         />
                       ) : (
                         <PreviewGlobalInvoice
@@ -342,7 +449,7 @@ function App() {
                       </p>
                     </div>
                   )}
-                </div>
+                </motion.div>
               } />
               
               <Route path="/guide" element={<Guide />} />
@@ -353,6 +460,7 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/support" element={<SupportPage />} />
               <Route path="/features" element={<FeaturesPage />} />
+              <Route path="/dashboard" element={<ChartsDashboard />} />
             </Routes>
           </main>
 

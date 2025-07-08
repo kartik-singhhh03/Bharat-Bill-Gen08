@@ -1,7 +1,7 @@
 {
-  "name": "BharatBillGen - GST Invoice Generator",
-  "short_name": "BharatBillGen",
-  "description": "Generate GST-compliant invoices for Indian businesses",
+  "name": "BharatBillGen - AI Invoice Generator",
+  "short_name": "BharatBillGen AI",
+  "description": "AI-powered invoice generator with OCR, voice input, and multi-currency support",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -21,7 +21,15 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["business", "finance", "productivity"],
+  "categories": ["business", "finance", "productivity", "ai", "automation"],
   "lang": "en-IN",
-  "dir": "ltr"
+  "dir": "ltr",
+  "features": [
+    "OCR scanning",
+    "Voice input", 
+    "AI descriptions",
+    "Multi-currency",
+    "Real-time translation",
+    "Analytics dashboard"
+  ]
 }

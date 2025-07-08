@@ -1,0 +1,61 @@
+export const currencies = [
+  { code: 'INR', name: 'Indian Rupee', symbol: '₹', country: 'India' },
+  { code: 'USD', name: 'US Dollar', symbol: '$', country: 'United States' },
+  { code: 'EUR', name: 'Euro', symbol: '€', country: 'European Union' },
+  { code: 'GBP', name: 'British Pound', symbol: '£', country: 'United Kingdom' },
+  { code: 'JPY', name: 'Japanese Yen', symbol: '¥', country: 'Japan' },
+  { code: 'CNY', name: 'Chinese Yuan', symbol: '¥', country: 'China' },
+  { code: 'AUD', name: 'Australian Dollar', symbol: 'A$', country: 'Australia' },
+  { code: 'CAD', name: 'Canadian Dollar', symbol: 'C$', country: 'Canada' },
+  { code: 'CHF', name: 'Swiss Franc', symbol: 'CHF', country: 'Switzerland' },
+  { code: 'SGD', name: 'Singapore Dollar', symbol: 'S$', country: 'Singapore' },
+  { code: 'HKD', name: 'Hong Kong Dollar', symbol: 'HK$', country: 'Hong Kong' },
+  { code: 'NZD', name: 'New Zealand Dollar', symbol: 'NZ$', country: 'New Zealand' },
+  { code: 'SEK', name: 'Swedish Krona', symbol: 'kr', country: 'Sweden' },
+  { code: 'NOK', name: 'Norwegian Krone', symbol: 'kr', country: 'Norway' },
+  { code: 'DKK', name: 'Danish Krone', symbol: 'kr', country: 'Denmark' },
+  { code: 'PLN', name: 'Polish Zloty', symbol: 'zł', country: 'Poland' },
+  { code: 'CZK', name: 'Czech Koruna', symbol: 'Kč', country: 'Czech Republic' },
+  { code: 'HUF', name: 'Hungarian Forint', symbol: 'Ft', country: 'Hungary' },
+  { code: 'RUB', name: 'Russian Ruble', symbol: '₽', country: 'Russia' },
+  { code: 'BRL', name: 'Brazilian Real', symbol: 'R$', country: 'Brazil' },
+  { code: 'MXN', name: 'Mexican Peso', symbol: '$', country: 'Mexico' },
+  { code: 'ARS', name: 'Argentine Peso', symbol: '$', country: 'Argentina' },
+  { code: 'CLP', name: 'Chilean Peso', symbol: '$', country: 'Chile' },
+  { code: 'COP', name: 'Colombian Peso', symbol: '$', country: 'Colombia' },
+  { code: 'PEN', name: 'Peruvian Sol', symbol: 'S/', country: 'Peru' },
+  { code: 'ZAR', name: 'South African Rand', symbol: 'R', country: 'South Africa' },
+  { code: 'EGP', name: 'Egyptian Pound', symbol: '£', country: 'Egypt' },
+  { code: 'NGN', name: 'Nigerian Naira', symbol: '₦', country: 'Nigeria' },
+  { code: 'KES', name: 'Kenyan Shilling', symbol: 'KSh', country: 'Kenya' },
+  { code: 'GHS', name: 'Ghanaian Cedi', symbol: '₵', country: 'Ghana' },
+  { code: 'AED', name: 'UAE Dirham', symbol: 'د.إ', country: 'United Arab Emirates' },
+  { code: 'SAR', name: 'Saudi Riyal', symbol: '﷼', country: 'Saudi Arabia' },
+  { code: 'QAR', name: 'Qatari Riyal', symbol: '﷼', country: 'Qatar' },
+  { code: 'KWD', name: 'Kuwaiti Dinar', symbol: 'د.ك', country: 'Kuwait' },
+  { code: 'BHD', name: 'Bahraini Dinar', symbol: '.د.ب', country: 'Bahrain' },
+  { code: 'OMR', name: 'Omani Rial', symbol: '﷼', country: 'Oman' },
+  { code: 'JOD', name: 'Jordanian Dinar', symbol: 'د.ا', country: 'Jordan' },
+  { code: 'LBP', name: 'Lebanese Pound', symbol: '£', country: 'Lebanon' },
+  { code: 'ILS', name: 'Israeli Shekel', symbol: '₪', country: 'Israel' },
+  { code: 'TRY', name: 'Turkish Lira', symbol: '₺', country: 'Turkey' },
+  { code: 'KRW', name: 'South Korean Won', symbol: '₩', country: 'South Korea' },
+  { code: 'THB', name: 'Thai Baht', symbol: '฿', country: 'Thailand' },
+  { code: 'MYR', name: 'Malaysian Ringgit', symbol: 'RM', country: 'Malaysia' },
+  { code: 'IDR', name: 'Indonesian Rupiah', symbol: 'Rp', country: 'Indonesia' },
+  { code: 'PHP', name: 'Philippine Peso', symbol: '₱', country: 'Philippines' },
+  { code: 'VND', name: 'Vietnamese Dong', symbol: '₫', country: 'Vietnam' },
+  { code: 'TWD', name: 'Taiwan Dollar', symbol: 'NT$', country: 'Taiwan' },
+  { code: 'PKR', name: 'Pakistani Rupee', symbol: '₨', country: 'Pakistan' },
+  { code: 'BDT', name: 'Bangladeshi Taka', symbol: '৳', country: 'Bangladesh' },
+  { code: 'LKR', name: 'Sri Lankan Rupee', symbol: '₨', country: 'Sri Lanka' },
+  { code: 'NPR', name: 'Nepalese Rupee', symbol: '₨', country: 'Nepal' }
+]
+
+export const getCurrencyByCode = (code) => {
+  return currencies.find(currency => currency.code === code) || currencies[0]
+}
+
+export const getCurrencyByCountry = (country) => {
+  return currencies.find(currency => currency.country === country) || currencies[0]
+}
