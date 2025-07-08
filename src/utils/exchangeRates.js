@@ -1,4 +1,4 @@
-const EXCHANGE_API_KEY = 'efc4ad467a7a76c22e34072f'
+const EXCHANGE_API_KEY = '#'
 const CACHE_DURATION = 60 * 60 * 1000 // 1 hour in milliseconds
 
 class ExchangeRateService {
