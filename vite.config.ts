@@ -23,10 +23,7 @@ export default defineConfig({
           },
           {
             src: 'pwa-512x512.png',
-              icons: ['lucide-react'],
-              ai: ['tesseract.js', 'framer-motion'],
-              charts: ['recharts'],
-              email: ['@emailjs/browser']
+            sizes: '512x512',
             type: 'image/png'
           }
         ]
